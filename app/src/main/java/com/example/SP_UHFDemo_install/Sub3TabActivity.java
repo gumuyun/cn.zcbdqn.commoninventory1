@@ -203,7 +203,7 @@ public class Sub3TabActivity extends Activity {
 
         button_writeop.setOnClickListener(new OnClickListener() {
             @Override
-            public void onClick(View arg0) {
+            public void onClick(View arg0) {//写块区数据
                 // TODO Auto-generated method stub
                 try {
                     boolean isWrite = true;
