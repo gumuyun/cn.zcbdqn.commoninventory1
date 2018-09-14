@@ -1,0 +1,68 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/home_background"
+    tools:context="cn.zcbdqn.commoninventory.activity.SettingPrintActivity" >
+	<!-- 头部 -->
+    <LinearLayout
+        android:id="@+id/in_stock_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#16beea"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/setting_print_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:background="@drawable/btn_selector"
+            android:contentDescription="@string/back"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@drawable/stock_back" />
+
+        <TextView
+            android:id="@+id/setting_print_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/setting_print"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+
+    </LinearLayout>
+    <!-- 中间主体部分 -->
+    <LinearLayout
+        android:id="@+id/main_menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp"
+        android:orientation="vertical" >
+        <TextView 
+            android:id="@+id/setting_print_item_tv"
+            android:layout_width="match_parent"
+        	android:layout_height="40dp"
+        	android:layout_marginTop="5dp"
+        	android:layout_marginBottom="5dp"
+        	android:textSize="16sp"
+        	android:textColor="#777"
+        	android:gravity="center_vertical"
+        	android:background="@drawable/shape_setting_print_tv_bg"
+        	android:text="@string/system_bt_print"/>
+        <ListView 
+            android:id="@+id/setting_print_lv"
+            android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+            />
+            
+        
+        </LinearLayout>
+</LinearLayout>

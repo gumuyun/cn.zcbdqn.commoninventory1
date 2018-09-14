@@ -1,0 +1,125 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/tv_inventory_prefix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/add_warehouse"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize18" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/view" />
+    <LinearLayout
+        android:id="@+id/add_warehouse_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        >
+        <RelativeLayout 
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content">
+        	
+            <TextView
+                android:id="@+id/warehouse_name_tv"
+                android:text="@string/warehouse_name"
+                android:textSize="@dimen/textsize16"
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>
+            
+            <EditText
+                android:id="@+id/warehouse_name_et"
+                 android:textSize="@dimen/textsize16"
+                 android:hint="@string/in_warehouse_name_hint"
+                 android:layout_toRightOf="@id/warehouse_name_tv"
+                 android:background="@drawable/shape_in_stock_edit_bg"
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>
+            
+        </RelativeLayout>
+        <RelativeLayout 
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content">
+        	
+            <TextView
+                android:id="@+id/warehouse_address_tv"
+                android:text="@string/warehouse_address"
+                android:textSize="@dimen/textsize16"
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>
+            
+            <EditText
+                android:id="@+id/warehouse_address_et"
+                 android:textSize="@dimen/textsize16"
+                 android:hint="@string/in_warehouse_name_hint"
+                 android:layout_toRightOf="@id/warehouse_address_tv"
+                 android:background="@drawable/shape_in_stock_edit_bg"
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>
+            
+        </RelativeLayout>
+        <RelativeLayout 
+            android:gravity="center_vertical"
+            android:layout_marginTop="8dp"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_width="match_parent"
+        	android:layout_height="wrap_content">
+        	
+            <TextView
+                android:id="@+id/warehouse_remarks_tv"
+                android:text="@string/remarks"
+                android:textSize="@dimen/textsize16"
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>
+            
+            <EditText
+                android:id="@+id/warehouse_remarks_et"
+                 android:textSize="@dimen/textsize16"
+                 android:layout_toRightOf="@id/warehouse_remarks_tv"
+                 android:background="@drawable/shape_in_stock_edit_bg"
+                android:layout_width="wrap_content"
+        		android:layout_height="wrap_content"/>
+            
+        </RelativeLayout>
+        
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/btn_warehouse_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:orientation="horizontal">
+		<Button 
+		    android:id="@+id/add_warehouse_btn"
+		    android:text="@string/ok"
+		    android:layout_width="100dp"
+	        android:layout_height="wrap_content"/>
+		<Button 
+		    android:id="@+id/cal_warehouse_btn"
+		    android:text="@string/cancel"
+		    android:layout_width="100dp"
+	        android:layout_height="wrap_content"/>
+	</LinearLayout>
+</LinearLayout>

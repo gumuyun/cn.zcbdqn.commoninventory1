@@ -3,8 +3,8 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId 'com.example.SP_UHFDemo_install'
-        minSdkVersion 15
+        applicationId 'cn.zcbdqn.commoninventory'
+        minSdkVersion 19
         targetSdkVersion 26
         versionCode 1
         versionName "1.0"
@@ -30,4 +30,14 @@ dependencies {
     implementation files('libs/UHF_API_JAR.jar')
     implementation files('libs/ModuleAPI_J.jar')
     implementation files('libs/Module_Android_Power.jar')
+    implementation files('libs/serialportgzxw.jar')
+    //    implementation files('libs/layoutlib.jar')
+    implementation files('libs/UHFAPI.jar')
+    implementation files('libs/serialportmodule.jar')
+    implementation files('libs/zp_cpcl_new.jar')
+    compile 'com.google.code.gson:gson:2.8.5'
+    compile 'com.squareup.okhttp3:okhttp:3.4.1'
+    compile files('libs/lite-go-1.0.0.jar')
+    compile files('libs/log4j-1.2.17.jar')
+    compile files('libs/android-logging-log4j-1.0.3.jar')
 }

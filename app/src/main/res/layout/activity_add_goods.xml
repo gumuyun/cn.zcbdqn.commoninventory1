@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/tv_inventory_prefix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/add_goods"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize18" />
+
+    <LinearLayout
+        android:id="@+id/add_goods_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical" >
+			<!-- 商品名称 -->
+            <TextView
+                android:id="@+id/goods_id_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_id_display"
+                android:textSize="@dimen/textsize16" />
+
+            <EditText
+                android:id="@+id/goods_id_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_id_tv"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/goods_id_hint"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize16" >
+
+                <requestFocus />
+            </EditText>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical" >
+			<!-- 商品名称 -->
+            <TextView
+                android:id="@+id/goods_name_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_name"
+                android:textSize="@dimen/textsize16" />
+
+            <EditText
+                android:id="@+id/goods_name_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_name_tv"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/goods_name_hint"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize16" >
+
+            </EditText>
+        </RelativeLayout>
+
+        <!--<LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal" >
+			&lt;!&ndash; 货位 &ndash;&gt;
+            <TextView
+                android:id="@+id/location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_tv"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/goods_allocation_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/select_location"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="16sp" />
+
+            <Button
+                android:id="@+id/sel_allocation_btn"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/btn_selector1"
+                android:text="@string/select_location_display" />
+        </LinearLayout>-->
+       <!-- <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:orientation="horizontal" >
+			&lt;!&ndash; 货位 &ndash;&gt;
+            <TextView
+                android:id="@+id/location_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/location_tv"
+                android:textSize="16sp" />
+
+            <EditText
+                android:id="@+id/goods_allocation_et"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/select_location"
+                android:singleLine="true"
+                android:textCursorDrawable="@null"
+                android:textSize="16sp" />
+
+            <Spinner 
+                android:id="@+id/sel_allocation_spi"
+                android:layout_width="100dp"
+                android:layout_height="wrap_content"
+                android:spinnerMode="dialog"/>
+        </LinearLayout>-->
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical" >
+			<!-- 供应商 -->
+            <TextView
+                android:id="@+id/goods_supplier_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_supplier_display"
+                android:textSize="@dimen/textsize16" />
+
+            <EditText
+                android:id="@+id/goods_supplier_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_supplier_tv"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/goods_supplier_hint"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize16" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical" >
+			<!-- 规格 -->
+            <TextView
+                android:id="@+id/goods_standard_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_standard_display"
+                android:textSize="@dimen/textsize16" />
+
+            <EditText
+                android:id="@+id/goods_standard_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_standard_tv"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/goods_standard_hint"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize16" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical" >
+			<!-- 规格 -->
+            <TextView
+                android:id="@+id/goods_unit_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_unit_display"
+                android:textSize="@dimen/textsize16" />
+
+            <EditText
+                android:id="@+id/goods_unit_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_unit_tv"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/goods_unit_hint"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize16" />
+        </RelativeLayout>
+        
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="8dp"
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="5dp"
+            android:layout_marginTop="8dp"
+            android:gravity="center_vertical" >
+			<!-- 规格 -->
+            <TextView
+                android:id="@+id/goods_price_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/goods_price_display"
+                android:textSize="@dimen/textsize16" />
+
+            <EditText
+                android:id="@+id/goods_price_et"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/goods_price_tv"
+                android:background="@drawable/shape_in_stock_edit_bg"
+                android:hint="@string/goods_price_hint"
+                android:singleLine="true"
+                android:textSize="@dimen/textsize16" />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/view" />
+
+    <LinearLayout
+        android:id="@+id/btn_warehouse_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingTop="5dp"
+        android:paddingBottom="5dp"
+        android:orientation="horizontal" >
+
+        <Button
+            android:id="@+id/add_goods_btn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:background="@drawable/btn_selector1"
+            android:text="@string/ok" />
+
+        <Button
+            android:id="@+id/cal_goods_btn"
+            android:layout_width="100dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:background="@drawable/btn_selector1"
+            android:text="@string/cancel" />
+    </LinearLayout>
+
+</LinearLayout>

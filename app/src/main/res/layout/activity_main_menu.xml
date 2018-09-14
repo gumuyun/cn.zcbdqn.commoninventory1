@@ -1,0 +1,291 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+	android:background="@color/home_background"
+    tools:context="cn.zcbdqn.commoninventory.activity.MainMenuActivity" >
+
+    <!-- 主界面 -->
+    <!-- 头部 -->
+
+    <LinearLayout
+        android:id="@+id/main_menu_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#16beea"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/main_menu_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/app_name"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+    </LinearLayout>
+    <!-- 中间主体部分 -->
+
+    <LinearLayout
+        android:id="@+id/main_menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <LinearLayout
+            android:id="@+id/main_menu_line1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/take_stock"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/inventory_display"
+                    android:src="@drawable/pandian" />
+
+                <TextView
+                    android:id="@+id/inventory_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/take_stock"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/inventory_display" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/in_stock"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/instock_display"
+                    android:src="@drawable/ruku" />
+
+                <TextView
+                    android:id="@+id/instock_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/in_stock"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/instock_display" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/out_stock"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/outstock_display"
+                    android:src="@drawable/chuku" />
+
+                <TextView
+                    android:id="@+id/outstock_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/out_stock"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/outstock_display" />
+            </RelativeLayout>
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/main_menu_line2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="17dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal" >
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="15dp"
+                android:layout_weight="1" >
+
+                <ImageButton
+                    android:id="@+id/goods_manage"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/goods_manage_display"
+                    android:src="@drawable/ruhuo" />
+
+                <TextView
+                    android:id="@+id/incargo_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/goods_manage"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/goods_manage_display" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:visibility="invisible" >
+
+                <ImageButton
+                    android:id="@+id/out_cargo"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/outstock_display"
+                    android:src="@drawable/chuhuo" />
+
+                <TextView
+                    android:id="@+id/outcargo_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/out_cargo"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/outcargo_display" />
+            </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="15dp"
+                android:layout_weight="1"
+                android:visibility="invisible" >
+
+                <ImageButton
+                    android:id="@+id/blank"
+                    android:layout_width="44dp"
+                    android:layout_height="44dp"
+                    android:layout_centerHorizontal="true"
+                    android:contentDescription="@string/outstock_display"
+                    android:src="@drawable/chuhuo" />
+
+                <TextView
+                    android:id="@+id/blank_display"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/blank"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="2dp"
+                    android:text="@string/outcargo_display" />
+            </RelativeLayout>
+        </LinearLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_menu_foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_main_menu_foot_bd"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="8dp" >
+
+        <RelativeLayout
+            android:id="@+id/main_menu_foot_scan_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/foot_scan"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/sacn"
+                android:src="@drawable/scan_foot_selected" />
+
+            <TextView
+                android:id="@+id/foot_scan_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/foot_scan"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/sacn"
+                android:textColor="#0971ff"
+                android:textSize="@dimen/foot_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_menu_foot_business_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/foot_business"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/business"
+                android:src="@drawable/sangdang_foot_defin" />
+
+            <TextView
+                android:id="@+id/business_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/foot_business"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/business"
+                android:textColor="#737373"
+                android:textSize="@dimen/foot_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/main_menu_foot_setting_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/foot_setting"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/setting"
+                android:src="@drawable/setting_foot_defin" />
+
+            <TextView
+                android:id="@+id/setting_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/foot_setting"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/setting"
+                android:textColor="#737373"
+                android:textSize="@dimen/foot_size" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

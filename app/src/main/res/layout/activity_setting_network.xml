@@ -1,0 +1,140 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/home_background"
+    android:orientation="vertical"
+    tools:context="cn.zcbdqn.commoninventory.activity.SettingPrintActivity" >
+
+    <!-- 头部 -->
+
+    <LinearLayout
+        android:id="@+id/in_stock_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#16beea"
+        android:gravity="center"
+        android:orientation="horizontal" >
+
+        <ImageView
+            android:id="@+id/setting_network_back"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="14dp"
+            android:background="@drawable/btn_selector"
+            android:contentDescription="@string/back"
+            android:paddingTop="8dp"
+            android:paddingBottom="8dp"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:src="@drawable/stock_back" />
+
+        <TextView
+            android:id="@+id/setting_print_title_tv"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center"
+            android:text="@string/setting_network"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+    </LinearLayout>
+    <!-- 中间主体部分 -->
+
+    <RelativeLayout
+        android:id="@+id/main_menu_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:paddingLeft="14dp"
+        android:paddingRight="14dp" >
+
+        <TextView
+            android:id="@+id/server_ip"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_setting_print_tv_bg"
+            android:gravity="center_vertical"
+            android:text="@string/server_ip"
+            android:textColor="#777"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/server_ip_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/server_ip"
+            android:hint="@string/server_ip_hint"
+            android:singleLine="true"
+            android:textColor="#777"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/server_port"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/server_ip"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_setting_print_tv_bg"
+            android:gravity="center_vertical"
+            android:text="@string/server_port"
+            android:textColor="#777"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/server_port_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/server_ip_et"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/server_port"
+            android:hint="@string/server_port_hint"
+            android:inputType="numberSigned"
+            android:singleLine="true"
+            android:textColor="#777"
+            android:textSize="16sp" />
+
+        <TextView
+            android:id="@+id/context_path"
+            android:layout_width="wrap_content"
+            android:layout_height="40dp"
+            android:layout_below="@id/server_port"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:background="@drawable/shape_setting_print_tv_bg"
+            android:gravity="center_vertical"
+            android:text="@string/context_path"
+            android:textColor="#777"
+            android:textSize="16sp" />
+
+        <EditText
+            android:id="@+id/context_path_et"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_below="@id/server_port_et"
+            android:layout_marginBottom="5dp"
+            android:layout_marginTop="5dp"
+            android:layout_toRightOf="@id/context_path"
+            android:hint="@string/context_path_hint"
+            android:singleLine="true"
+            android:textColor="#777"
+            android:textSize="16sp" />
+    </RelativeLayout>
+
+    <Button
+        android:id="@+id/setting_network_smt"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_marginBottom="5dp"
+        android:layout_marginLeft="14dp"
+        android:layout_marginRight="14dp"
+        android:layout_marginTop="5dp"
+        android:text="@string/ok" />
+
+</LinearLayout>

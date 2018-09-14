@@ -1,0 +1,139 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/home_background"
+    tools:context="cn.zcbdqn.commoninventory.activity.MainSettingActivity" >
+
+    <!-- 设置界面 -->
+    <!-- 头部 -->
+
+    <LinearLayout
+        android:id="@+id/main_setting_head"
+        android:layout_width="match_parent"
+        android:layout_height="48dp"
+        android:background="#16beea"
+        android:gravity="center"
+        android:orientation="vertical" >
+
+        <TextView
+            android:id="@+id/main_setting_title_tv"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="@string/setting"
+            android:textColor="#fff"
+            android:textSize="@dimen/title_size" />
+    </LinearLayout>
+    <!-- 中间主体部分 -->
+
+    <LinearLayout
+        android:id="@+id/main_setting_content"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/stting_lv"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:listSelector="@drawable/listview_bg" />
+        <View 
+            android:background="@color/listview_gray"
+            android:layout_width="match_parent"
+            android:layout_height="1px"/>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/main_setting_foot"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shape_main_menu_foot_bd"
+        android:baselineAligned="false"
+        android:orientation="horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="8dp" >
+
+        <RelativeLayout
+            android:id="@+id/setting_foot_menu_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="25dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/foot_scan"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/sacn"
+                android:src="@drawable/scan_foot_defin" />
+
+            <TextView
+                android:id="@+id/foot_scan_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/foot_scan"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/sacn"
+                android:textColor="#737373"
+                android:textSize="@dimen/foot_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_foot_business_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/foot_business"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/business"
+                android:src="@drawable/sangdang_foot_defin" />
+
+            <TextView
+                android:id="@+id/business_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/foot_business"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/business"
+                android:textColor="#737373"
+                android:textSize="@dimen/foot_size" />
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/setting_foot_setting_rl"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_marginRight="25dp"
+            android:layout_weight="1" >
+
+            <ImageView
+                android:id="@+id/foot_setting"
+                android:layout_width="22dp"
+                android:layout_height="22dp"
+                android:layout_centerHorizontal="true"
+                android:contentDescription="@string/setting"
+                android:src="@drawable/setting_foot_selected" />
+
+            <TextView
+                android:id="@+id/setting_display"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/foot_setting"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="2dp"
+                android:text="@string/setting"
+                android:textColor="#0971ff"
+                android:textSize="@dimen/foot_size" />
+        </RelativeLayout>
+    </LinearLayout>
+
+</LinearLayout>

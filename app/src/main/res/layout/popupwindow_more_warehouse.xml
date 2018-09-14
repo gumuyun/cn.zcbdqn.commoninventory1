@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="5dp"
+    android:background="@color/white"
+    android:gravity="center"
+    android:orientation="vertical" >
+
+    <TextView
+        android:id="@+id/add_warehouse"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/add_warehouse"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize18" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/view" />
+    <TextView
+        android:id="@+id/update_warehouse"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/update_warehouse"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize18" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/view" />
+    <TextView
+        android:id="@+id/delete_warehouse"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:gravity="center"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/delete_warehouse"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize18" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/view" />
+</LinearLayout>

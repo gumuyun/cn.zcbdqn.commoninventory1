@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginRight="5dp"
+    android:background="@color/white"
+    android:gravity="center_horizontal"
+    android:orientation="vertical" >
+    <TextView
+        android:id="@+id/tv_inventory_prefix"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:gravity="center_horizontal"
+        android:paddingBottom="5dp"
+        android:paddingTop="5dp"
+        android:text="@string/select_location"
+        android:textColor="@color/gray"
+        android:textSize="@dimen/textsize18" />
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dip"
+        android:background="@color/view" />
+    <ListView 
+        android:id="@+id/location_lv"
+        android:layout_weight="1"
+        android:listSelector="@drawable/btn_type_selector"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"/>
+	<Button 
+	    android:id="@+id/pop_can_loc_btn"
+	    android:text="@string/cancel"
+	    android:layout_width="100dp"
+        android:layout_height="wrap_content"/>
+</LinearLayout>
