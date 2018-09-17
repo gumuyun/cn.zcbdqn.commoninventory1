@@ -18,6 +18,8 @@ public class Rfid {
 	 * 仓库编号
 	 */
 	private String warehouseId;		// 仓库编号
+	private String allocationId;		// 货位编号
+	private String allocationName;		// 货位名称
 	/**
 	 * 仓库名字
 	 */
@@ -66,19 +68,34 @@ public class Rfid {
 		this.createDate = createDate;
 		this.updateDate = updateDate;
 	}
+
 	@Override
 	public String toString() {
-		return "Rfid [id=" + id + ", rfidCode=" + rfidCode + ", goodsId="
-				+ goodsId + ", warehouseId=" + warehouseId + ", warehouseName="
-				+ warehouseName + ", goodsName=" + goodsName + ", goodsCounts="
-				+ goodsCounts + ", checked=" + checked + ", createBy="
-				+ createBy + ", updateBy=" + updateBy + ", createDate="
-				+ createDate + ", updateDate=" + updateDate + "]";
+		return "Rfid{" +
+				"id='" + id + '\'' +
+				", serverId='" + serverId + '\'' +
+				", rfidCode='" + rfidCode + '\'' +
+				", goodsId='" + goodsId + '\'' +
+				", warehouseId='" + warehouseId + '\'' +
+				", allocationId='" + allocationId + '\'' +
+				", allocationName='" + allocationName + '\'' +
+				", warehouseName='" + warehouseName + '\'' +
+				", goodsName='" + goodsName + '\'' +
+				", remarks='" + remarks + '\'' +
+				", status='" + status + '\'' +
+				", goodsCounts=" + goodsCounts +
+				", checked=" + checked +
+				", createBy='" + createBy + '\'' +
+				", updateBy='" + updateBy + '\'' +
+				", createDate='" + createDate + '\'' +
+				", updateDate='" + updateDate + '\'' +
+				'}';
 	}
+
 	public Rfid(String id, String rfidCode, String goodsId, String warehouseId,
-			String warehouseName, String goodsName, Integer goodsCounts,
-			boolean checked, String createBy, String updateBy,
-			String createDate, String updateDate) {
+				String warehouseName, String goodsName, Integer goodsCounts,
+				boolean checked, String createBy, String updateBy,
+				String createDate, String updateDate) {
 		super();
 		this.id = id;
 		this.rfidCode = rfidCode;
@@ -204,8 +221,44 @@ public class Rfid {
 		return rfidCode.equals(rfid.rfidCode);
 	}
 
+	public Rfid(String id, String serverId, String rfidCode, String goodsId, String warehouseId, String allocationId, String allocationName, String warehouseName, String goodsName, String remarks, String status, Integer goodsCounts, boolean checked, String createBy, String updateBy, String createDate, String updateDate) {
+		this.id = id;
+		this.serverId = serverId;
+		this.rfidCode = rfidCode;
+		this.goodsId = goodsId;
+		this.warehouseId = warehouseId;
+		this.allocationId = allocationId;
+		this.allocationName = allocationName;
+		this.warehouseName = warehouseName;
+		this.goodsName = goodsName;
+		this.remarks = remarks;
+		this.status = status;
+		this.goodsCounts = goodsCounts;
+		this.checked = checked;
+		this.createBy = createBy;
+		this.updateBy = updateBy;
+		this.createDate = createDate;
+		this.updateDate = updateDate;
+	}
+
 	@Override
 	public int hashCode() {
 		return rfidCode.hashCode();
+	}
+
+	public String getAllocationId() {
+		return allocationId;
+	}
+
+	public void setAllocationId(String allocationId) {
+		this.allocationId = allocationId;
+	}
+
+	public String getAllocationName() {
+		return allocationName;
+	}
+
+	public void setAllocationName(String allocationName) {
+		this.allocationName = allocationName;
 	}
 }

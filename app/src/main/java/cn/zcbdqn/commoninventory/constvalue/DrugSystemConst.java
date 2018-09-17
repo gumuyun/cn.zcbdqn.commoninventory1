@@ -41,4 +41,10 @@ public class DrugSystemConst {
 
 	//已选择的蓝牙设备地址
 	public static String bluePrintAddress = null;
+
+
+	//黙认仓库id,保存SharedPreferences
+	public static String warehouseId="warehouseId";
+	//黙认仓库name.保存SharedPreferences
+	public static String warehouseName="warehouseName";
 }

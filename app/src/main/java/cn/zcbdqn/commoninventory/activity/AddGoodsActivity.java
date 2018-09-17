@@ -2,8 +2,12 @@ package cn.zcbdqn.commoninventory.activity;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Message;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.Window;
@@ -12,14 +16,12 @@ import android.widget.EditText;
 import android.widget.PopupWindow;
 import android.widget.Toast;
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-
 import java.io.IOException;
 import java.util.Date;
 
 import cn.zcbdqn.commoninventory.R;
 import cn.zcbdqn.commoninventory.context.MyApplication;
+import cn.zcbdqn.commoninventory.context.ScanOperate;
 import cn.zcbdqn.commoninventory.db.RfidDataOpenHelper;
 import cn.zcbdqn.commoninventory.db.TableNamesConstant;
 import cn.zcbdqn.commoninventory.entity.NetworkConfig;
@@ -27,10 +29,12 @@ import cn.zcbdqn.commoninventory.entity.RfidGoods;
 import cn.zcbdqn.commoninventory.entity.RfidGoodsAllocation;
 import cn.zcbdqn.commoninventory.entity.User;
 import cn.zcbdqn.commoninventory.utils.DateUtil;
+import cn.zcbdqn.commoninventory.utils.GsonUtil;
 import cn.zcbdqn.commoninventory.utils.NetworkConfigConstant;
 import cn.zcbdqn.commoninventory.utils.Object2Values;
 import cn.zcbdqn.commoninventory.utils.OkHttpUtil;
 import cn.zcbdqn.commoninventory.utils.UUIDUtil;
+import cn.zcbdqn.commoninventory.utils.zkprint.ZKPrintUtils;
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.RequestBody;
@@ -83,6 +87,10 @@ public class AddGoodsActivity extends Activity implements OnClickListener {
 	 */
 	private Button calBtn;
 
+	private String defaultBluePrintAddress;
+	private ScanOperate scanOperate;
+	private boolean is_canScan=true;
+	private boolean is_intercept = true;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
@@ -98,13 +106,18 @@ public class AddGoodsActivity extends Activity implements OnClickListener {
 		goodsPriceEt = (EditText) findViewById(R.id.goods_price_et);
 		goodsStandardEt = (EditText) findViewById(R.id.goods_standard_et);
 
+		defaultBluePrintAddress= (String) MyApplication.applicationMap.get("defaultBluePrintAddress");
 		//selectAllocationSpi = (Spinner) findViewById(R.id.sel_allocation_spi);
 		addBtn = (Button) findViewById(R.id.add_goods_btn);
 		calBtn = (Button) findViewById(R.id.cal_goods_btn);
 
 		addBtn.setOnClickListener(this);
 		calBtn.setOnClickListener(this);
-		
+
+		scanOperate = new ScanOperate();
+		scanOperate.onCreate(this, R.raw.scanok);
+		scanOperate.openScannerPower(is_canScan);
+
 		//查询已有的货位  下拉
 		
 		//货位下拉列表显示
@@ -208,11 +221,12 @@ public class AddGoodsActivity extends Activity implements OnClickListener {
 
 			//发送网络请求到服务器
 			NetworkConfig networkConfig= (NetworkConfig) MyApplication.applicationMap.get("networkConfig");
-			Gson gson=new GsonBuilder().create();
-			String json=gson.toJson(rfidGoods);
+			//转换json
+			String json=GsonUtil.object2Json(rfidGoods);
 			Log.e("gumy",json);
 			String url=networkConfig.toUrl()+NetworkConfigConstant.ADD_GOODS;
 			Log.e("gumy",url);
+			//使用json创建requestBody
 			RequestBody requestBody = RequestBody.create(NetworkConfigConstant.JSON, json);
 			OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
 				@Override
@@ -228,7 +242,11 @@ public class AddGoodsActivity extends Activity implements OnClickListener {
 
 			long count=rfidDataOpenHelper.insert(TableNamesConstant.RFID_GOODS,null,Object2Values.object2Values(rfidGoods));
 			if(count>0){
+				if (defaultBluePrintAddress!=null){
+					ZKPrintUtils.print(defaultBluePrintAddress,goodsCode,true,null,false,0,this);
+				}
 				Toast.makeText(this,"增加"+goodsName+"成功!",Toast.LENGTH_SHORT).show();
+
 			}
 			break;
 		case R.id.cal_goods_btn:
@@ -243,12 +261,131 @@ public class AddGoodsActivity extends Activity implements OnClickListener {
 	}
 
 
+	/*
+	*//**
+	 * 按下扫描按扭
+	 */
+	@Override
+	public boolean onKeyDown(int keyCode, KeyEvent event) {
+
+		switch (keyCode) {
+			case KeyEvent.KEYCODE_BACK:
+				finish();
+				break;
+
+			case 0:
+				// 松开扫描键
+				// Toast.makeText(this, keyCode+"---"+is_canScan,
+				// Toast.LENGTH_SHORT).show();
+				break;
+			case 249:// KeyEvent.KEYCODE_MUTE:
+				if (is_canScan) {
+					if (event.getRepeatCount() == 0) {
+						scanOperate.setScannerContinuousMode();
+						scanOperate.Scanning();
+						Intent scannerIntent = new Intent(ScanOperate.SCN_CUST_ACTION_START);
+						sendBroadcast(scannerIntent);
+					}
+				}
+				break;
+		}
+
+		return false;
+	}
+
+
+
+	long currentTime=0;
+	/**
+	 * 松开扫描按扭
+	 */
+	@Override
+	public boolean onKeyUp(int keyCode, KeyEvent event) {
+		Log.e("gumy", is_canScan + ""+keyCode);
+		switch (keyCode) {
+			case 0:
+				// 松开扫描键
+				break;
+			case 249:
+				// KeyEvent.KEYCODE_MUTE:
+				// if (is_canScan) {
+				Intent scannerIntent = new Intent(ScanOperate.SCN_CUST_ACTION_CANCEL);
+				sendBroadcast(scannerIntent);
+				// }
+				break;
+		}
+
+		// return super.onKeyUp(keyCode, event);
+		return false;
+	}
+
+	private Handler mHandler = new Handler() {
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what) {
+				case ScanOperate.MESSAGE_TEXT:
+					String code = (String) msg.obj;
+					scanOperate.setVibratortime(50);
+					scanOperate.mediaPlayer();
+					// 扫描后获取数据处理
+					if (is_intercept) {
+
+						// onGetBarcode(code);
+						if (goodsCodeEt.isFocused()) {
+							goodsCodeEt.setText(code);
+							// 光标定位
+							goodsCodeEt.setSelection(goodsCodeEt.getText().length());
+							goodsCodeEt.setFocusable(true);
+							// locationEditText.requestFocus();
+						}
+					}
+					// 连续扫描
+					// Intent scannerIntent = new Intent(
+					// ScanOperate.SCN_CUST_ACTION_START);
+					// sendBroadcast(scannerIntent);
+					break;
+				case 2:
+
+					break;
+			}
+
+		}
+	};
+	@Override
+	protected void onResume() {
+		scanOperate.mHandler = mHandler;
+		// start the scanner.
+		scanOperate.onResume(this);
+		is_intercept = true;
+		super.onResume();
+	}
+
+	public void onStop() {
+		super.onStop();
+		scanOperate.onStop(this);
+	}
 
 	@Override
 	protected void onDestroy() {
 		// 结束Activity&从栈中移除该Activity
+		//MyApplication.getInstance().finishActivity(this);
+		scanOperate.mHandler = null;
+		scanOperate.onDestroy(this);
+		//release();
 		MyApplication.getInstance().finishActivity(this);
 		super.onDestroy();
+	}
+
+
+	/**
+	 * 扫描后获取的数据处理
+	 * 调用api读取扫到的一维码或二维码
+	 *
+	 * @param code
+	 *
+	 */
+	private void onGetBarcode(String code) {
+
 	}
 
 }

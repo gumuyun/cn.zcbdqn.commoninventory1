@@ -3,6 +3,7 @@ package cn.zcbdqn.commoninventory.activity;
 import android.app.Activity;
 import android.content.ContentValues;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -11,9 +12,6 @@ import android.view.Window;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
-
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
 
 import java.io.IOException;
 import java.util.Date;
@@ -27,12 +25,14 @@ import cn.zcbdqn.commoninventory.entity.NetworkConfig;
 import cn.zcbdqn.commoninventory.entity.RfidWarehouse;
 import cn.zcbdqn.commoninventory.entity.User;
 import cn.zcbdqn.commoninventory.utils.DateUtil;
+import cn.zcbdqn.commoninventory.utils.GsonUtil;
 import cn.zcbdqn.commoninventory.utils.NetworkConfigConstant;
 import cn.zcbdqn.commoninventory.utils.Object2Values;
 import cn.zcbdqn.commoninventory.utils.OkHttpUtil;
 import cn.zcbdqn.commoninventory.utils.UUIDUtil;
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class AddWarehouseActivity extends Activity implements OnClickListener {
@@ -47,13 +47,14 @@ public class AddWarehouseActivity extends Activity implements OnClickListener {
 	private EditText warehouseRemarksEt;
 
 	private RfidDataOpenHelper rfidDataOpenHelper;
-
+	private SharedPreferences sp;
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		requestWindowFeature(Window.FEATURE_NO_TITLE); // 设置无标题
 		MyApplication.getInstance().addActivity(this);
 		setContentView(R.layout.activity_add_warehouse);
+		sp = getSharedPreferences("InvenConfig", MODE_PRIVATE);
 		Map<String,Object> applicationMap=MyApplication.applicationMap;
 		networkConfig=(NetworkConfig) applicationMap.get("networkConfig");
 		smtBtn = (Button) findViewById(R.id.add_warehouse_btn);
@@ -95,30 +96,37 @@ public class AddWarehouseActivity extends Activity implements OnClickListener {
 			
 			//发送请求到服务器
 			
-			String url=networkConfig.getServerIp()+":"+networkConfig.getServerPort()+networkConfig.getContextPath()+NetworkConfigConstant.ADD_WAREHOUSE;
-			Gson gson = new GsonBuilder().setDateFormat("yyyy-MM-dd HH:mm:ss").create();
-			String json=gson.toJson(warehouse);
-			Log.i("gumy", json);
-			Log.i("gumy", url);
-			OkHttpUtil.sendOkHttpRequest(url, null, new Callback() {
+			String url=networkConfig.toUrl()+NetworkConfigConstant.ADD_WAREHOUSE;
+
+			String json= GsonUtil.object2Json(warehouse);
+			Log.e("gumy", json);
+			Log.e("gumy", url);
+
+			RequestBody requestBody = RequestBody.create(NetworkConfigConstant.JSON, json);
+			OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
 				
 				@Override
 				public void onResponse(Call call, Response response) throws IOException {
 					
-					Log.i("gumy", response.body().string());
+					Log.e("gumy", response.body().string());
 				}
 				
 				@Override
 				public void onFailure(Call call, IOException e) {
 					
-					Log.i("gumy", e.toString());
+					Log.e("gumy", "add warehouse fail with---->"+e.toString());
 				}
 			});
-			
+
+			//保存本地数据库
 			ContentValues values = Object2Values.object2Values(warehouse);
 			rfidDataOpenHelper.insert(TableNamesConstant.RFID_WAREHOUSE, null,values);
 
-			Log.i("gumy", TableNamesConstant.RFID_WAREHOUSE);
+			//保存到SharedPreferences
+			/*sp.edit().putString(DrugSystemConst.warehouseId,warehouse.getId());
+			sp.edit().putString(DrugSystemConst.warehouseName,warehouse.getWarehouseName());
+			sp.edit().apply();*/
+
 			intent = new Intent();
 			intent.putExtra("resultCode", 1);
 			// Toast.makeText(this, "click back", Toast.LENGTH_LONG).show();

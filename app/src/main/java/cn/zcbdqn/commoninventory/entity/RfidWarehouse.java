@@ -1,5 +1,7 @@
 package cn.zcbdqn.commoninventory.entity;
 
+import com.google.gson.annotations.SerializedName;
+
 /**
  * 仓库
  * @author gumuyun
@@ -7,6 +9,7 @@ package cn.zcbdqn.commoninventory.entity;
  */
 public class RfidWarehouse {
 
+	@SerializedName("androidId")
 	private String id;
 	private String serverId;
 	private String warehouseName;
@@ -112,8 +115,5 @@ public class RfidWarehouse {
 		this.id = id;
 		this.warehouseName = warehouseName;
 	}
-	
-	
-	
-	
+
 }

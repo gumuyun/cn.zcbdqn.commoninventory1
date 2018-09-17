@@ -140,7 +140,8 @@ public class MainMenuActivity extends BaseActivity {
 	protected void onStart() {
 		// TODO Auto-generated method stub
 		super.onStart();
-		initDevice();
+		//初始化rfid
+		//initDevice();
 	}
 
 

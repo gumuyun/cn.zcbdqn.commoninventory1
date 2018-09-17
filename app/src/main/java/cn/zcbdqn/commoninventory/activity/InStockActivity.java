@@ -30,6 +30,7 @@ import com.uhf.uhf.Common.Comm;
 import com.uhf.uhf.UHF1.UHF1Function.AndroidWakeLock;
 import com.uhf.uhf.UHF1.UHF1Function.SPconfig;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,17 +42,27 @@ import cn.zcbdqn.commoninventory.context.MyApplication;
 import cn.zcbdqn.commoninventory.context.ScanOperate;
 import cn.zcbdqn.commoninventory.db.RfidDataOpenHelper;
 import cn.zcbdqn.commoninventory.db.TableNamesConstant;
+import cn.zcbdqn.commoninventory.entity.NetworkConfig;
+import cn.zcbdqn.commoninventory.entity.Result;
 import cn.zcbdqn.commoninventory.entity.Rfid;
 import cn.zcbdqn.commoninventory.entity.RfidGoods;
 import cn.zcbdqn.commoninventory.entity.RfidGoodsAllocation;
 import cn.zcbdqn.commoninventory.entity.RfidWarehouse;
 import cn.zcbdqn.commoninventory.entity.User;
+import cn.zcbdqn.commoninventory.service.RfidGoodsAllocationService;
 import cn.zcbdqn.commoninventory.utils.DateUtil;
+import cn.zcbdqn.commoninventory.utils.GsonUtil;
+import cn.zcbdqn.commoninventory.utils.NetworkConfigConstant;
 import cn.zcbdqn.commoninventory.utils.Object2Values;
+import cn.zcbdqn.commoninventory.utils.OkHttpUtil;
 import cn.zcbdqn.commoninventory.utils.TextUtils;
 import cn.zcbdqn.commoninventory.utils.UUIDUtil;
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
-public class InStockActivity extends Activity implements OnClickListener {
+public class InStockActivity extends Activity implements OnClickListener, RfidGoodsAllocationService {
 
 	//读rfid
     public long exittime;
@@ -101,6 +112,12 @@ public class InStockActivity extends Activity implements OnClickListener {
 	 * 记录
 	 */
 	private TextView unitTextView;
+
+	/**
+	 * 商品
+	 */
+	private RfidGoods rfidGoods;
+
 	/**
 	 * 品项
 	 */
@@ -285,7 +302,7 @@ public class InStockActivity extends Activity implements OnClickListener {
 	 */
 	private void showRfidGoods(String barcode) {
 		//查询本地数据库显示信息
-		RfidGoods rfidGoods = rfidDataOpenHelper.queryUniqueGoods("select * from " + TableNamesConstant.RFID_GOODS + " where goodsCode=?", new String[]{barcode});
+		rfidGoods = rfidDataOpenHelper.queryUniqueGoods("select * from " + TableNamesConstant.RFID_GOODS + " where goodsCode=?", new String[]{barcode});
 		if (rfidGoods!=null){
             goodsNameTextView.setText(getResources().getString(R.string.goods_name_tv)+rfidGoods.getGoodsName());
             specificationTextView.setText(getResources().getString(R.string.goods_standard_display)+rfidGoods.getStandard());
@@ -303,17 +320,27 @@ public class InStockActivity extends Activity implements OnClickListener {
 		}
 	}
 
+	//增加
 	public long addRfidGoodsAllocation(String goodsAllStr){
 		long count1=-1L;
 		if(!TextUtils.isEmpty(goodsAllStr)){
 			int count=rfidDataOpenHelper.queryGoodsAllocationCount("select count(id) from "+TableNamesConstant.RFID_GOODS_ALLOCATION+" where goodsAllocationName=?" , new String[]{goodsAllStr});
 			//如果数据据库没有,则增加
 			if(count<=0){
-				rfidGoodsAllocation=new RfidGoodsAllocation(locationEditText.getText().toString(), "1", "1", "增加商品时增加", "1", DateUtil.format(null, new Date()), null);
+				//仓库
+				String warehouseId=((RfidWarehouse)MyApplication.applicationMap.get("warehouse")).getId();
+				//创建人
+				String userId=((User)MyApplication.applicationMap.get("user")).getId();
+
+				rfidGoodsAllocation=new RfidGoodsAllocation(locationEditText.getText().toString(), warehouseId, "1", "增加商品时增加", userId, DateUtil.format(null, new Date()), null);
 				rfidGoodsAllocation.setId(UUIDUtil.uuid());
 				//2f2be65f-0b5e-425c-acde-80065349945b
 				ContentValues values= Object2Values.object2Values(rfidGoodsAllocation);
 				count1=rfidDataOpenHelper.insert(TableNamesConstant.RFID_GOODS_ALLOCATION, null, values);
+
+				//向服务器发送增加的货位操作
+				addRfidGoodsAllocation(rfidGoodsAllocation);
+
 				//更新货位集合
 				if (count1>0){
 					updateGoodsAll();
@@ -428,6 +455,8 @@ public class InStockActivity extends Activity implements OnClickListener {
 								if (!rfidCodes.contains(epcstr)){
 									rfidCodes.add(epcstr);
 									rfid=new Rfid(epcstr, goodsNameTextView.getText().toString(), 1, true, currUser.getId(), DateUtil.format(null, new Date()));
+
+
 									//int mRSSI=Integer.parseInt(lsTagList.get(ListIndex).strRSSI);
 									index++;
 									//增加到集合中
@@ -451,8 +480,13 @@ public class InStockActivity extends Activity implements OnClickListener {
                                 //readCount = Comm.lsTagList6B.get(listIndex).nTotal;
 								if (!rfidCodes.contains(epcstr)){
 									rfidCodes.add(epcstr);
+									String goodsId=rfidGoods.getId();
+									String goodsName=rfidGoods.getGoodsName();
+
+
 									rfid=new Rfid(epcstr, goodsNameTextView.getText().toString(), 1, true, currUser.getId(), DateUtil.format(null, new Date()));
 									//int mRSSI=Integer.parseInt(lsTagList.get(ListIndex).strRSSI);
+									//rfid=new Rfid(UUIDUtil.uuid(), null, epcstr, goodsId, warehouseId, allocationId, allocationName, warehouseName,  goodsName,  remarks,  status,  goodsCounts,  checked,  createBy,  updateBy,  createDate,  updateDate);
 									index++;
 									//增加到集合中
 									if (!scanRfids.contains(rfid)){
@@ -543,8 +577,8 @@ public class InStockActivity extends Activity implements OnClickListener {
 			// Toast.makeText(this, "in_stock_btn", Toast.LENGTH_SHORT).show();
 			// 点击入库
 			// 循环打印一维码标签
-			Log.e("gumy", scanRfids.toString());
-
+			String json = GsonUtil.object2Json(scanRfids);
+			Log.e("gumy", json);
 			break;
 		case R.id.scan_rfid_btn:
 			// 扫描RFID
@@ -602,6 +636,8 @@ public class InStockActivity extends Activity implements OnClickListener {
 
 
 	public void startScanRfid(){
+		//清除之前扫到的rfid
+		//clearRfids();
 		//指定扫描的处理器
 		Comm.mInventoryHandler= uhfhandler;
 
@@ -612,6 +648,18 @@ public class InStockActivity extends Activity implements OnClickListener {
 		//显示停上扫描
 		stopScanRfidBtn.setVisibility(View.VISIBLE);
 	}
+
+	/**
+	 * //清除之前扫到的rfid
+	 */
+	private void clearRfids() {
+		scanRfids.clear();
+		rfidCodes.clear();
+		adapter.setList(scanRfids);
+		adapter.notifyDataSetChanged();
+		rfidCodesSize=0;
+	}
+
 	/**
 	 * 停止扫描RFID
 	 */
@@ -806,4 +854,63 @@ public class InStockActivity extends Activity implements OnClickListener {
 		Log.e("gumy", "connect");
 	}
 
+	/**
+	 * 向服务器发送请求,新增货位
+	 * @param rfidGoodsAllocation
+	 */
+	@Override
+	public void addRfidGoodsAllocation(RfidGoodsAllocation rfidGoodsAllocation) {
+
+		NetworkConfig networkConfig = (NetworkConfig) MyApplication.applicationMap.get("networkConfig");
+		String url=networkConfig.toUrl()+ NetworkConfigConstant.ADD_GOODS_ALLOCATION;
+		Log.e("gumy",url);
+		String json = GsonUtil.object2Json(rfidGoodsAllocation);
+		Log.e("gumy",json);
+		RequestBody requestBody=RequestBody.create(NetworkConfigConstant.JSON,json);
+
+		OkHttpUtil.sendOkHttpRequest(url, requestBody, new Callback() {
+			@Override
+			public void onFailure(Call call, IOException e) {
+				Log.e("gumy","Add GoodsAllocation Fail with:"+e.toString());
+			}
+
+			@Override
+			public void onResponse(Call call, Response response) throws IOException {
+
+				Result result = GsonUtil.json2Object(response.body().string(), Result.class);
+				Message message=new Message();
+				message.what=ADD_GOODS_ALLOCATION;
+				message.obj=result;
+				handlerAddAllocationToServer.sendMessage(message);
+			}
+		});
+	}
+	public static final int ADD_GOODS_ALLOCATION=1;
+	Handler handlerAddAllocationToServer=new Handler(){
+
+		@Override
+		public void handleMessage(Message msg) {
+			switch (msg.what){
+				case ADD_GOODS_ALLOCATION:
+					//增加货位
+					Result result = (Result) msg.obj;
+					if (result.getResult()==1){
+						//更新服务器id,sql:update rfid_goods_allocation set serverId=? where id=?
+						ContentValues values=new ContentValues();
+						values.put("serverId",result.getId());
+						Log.e("gumy",result.toString());
+						int count = rfidDataOpenHelper.update(TableNamesConstant.RFID_GOODS_ALLOCATION, values, "id=?", new String[]{result.getAndroidId()});
+						if (count>0){
+							Log.e("gumy","update rfid_goods_allocation set serverId = "+result.getId()+" where id=" +result.getAndroidId());
+						}else {
+							Log.e("gumy","增加货位同步更新到本地失败!");
+						}
+					}
+					break;
+
+			}
+
+
+		}
+	};
 }

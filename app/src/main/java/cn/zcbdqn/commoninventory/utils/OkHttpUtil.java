@@ -35,7 +35,8 @@ public class OkHttpUtil {
         if (requestBody!=null){
             builder.post(requestBody);
         }
-        Request request = builder.build();
+        Request request = builder.addHeader("Connection","close").build();
+
         client.newCall(request).enqueue(callback);
     }
 }

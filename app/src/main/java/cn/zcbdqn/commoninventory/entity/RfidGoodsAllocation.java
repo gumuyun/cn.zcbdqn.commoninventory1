@@ -1,8 +1,11 @@
 package cn.zcbdqn.commoninventory.entity;
 
 
+import com.google.gson.annotations.SerializedName;
+
 public class RfidGoodsAllocation {
 	public static long serialVersionUID=1;
+	@SerializedName("androidId")
 	private String id;		// 货位编号
 	private String serverId;		//
 	private String goodsAllocationName;		// 货位名字
